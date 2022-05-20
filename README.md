@@ -1,4 +1,5 @@
 # QRCodeGenerator
+![App Image](AppImage.png)  
 テキストからQRCodeを生成するツール。
 - ローカル処理のため、テキスト情報が外部に漏れることがない。
 - 比較的シンプルなUI(広告等が出ない)
