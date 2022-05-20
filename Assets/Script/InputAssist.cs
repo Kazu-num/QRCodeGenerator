@@ -35,16 +35,17 @@ namespace QRCodeGenerator
 
         void Awake()
         {
-            if(buttonPrefab == null || buttonField == null || target == null) { return; }
+            if (buttonPrefab == null || buttonField == null || target == null) { return; }
 
             // load save data
             var count = PlayerPrefs.GetInt(KeySaveCount, 0);
             if (count > 0)
             {
-                for(int i = 1; i < count - 1; i++)
+                for (int i = 0; i < count; i++)
                 {
-                    var str = PlayerPrefs.GetString(GetKey(i), StrFaild);
-                    if(str != StrFaild)
+                    var id = i + 1;
+                    var str = PlayerPrefs.GetString(GetKey(id), StrFaild);
+                    if (str != StrFaild)
                     {
                         assistStringList.Add(str);
                     }
@@ -52,22 +53,39 @@ namespace QRCodeGenerator
             }
 
             // generate button
-            foreach(var str in assistStringList)
+            foreach (var str in assistStringList)
             {
                 Add(str);
             }
 
             // additional save system
-            if(editStrField == null || editSaveButton == null || editDeleteLastButton == null) { return; }
+            if (editStrField == null || editSaveButton == null || editDeleteLastButton == null) { return; }
 
             editSaveButton.onClick.AddListener(() =>
             {
-                Save(editStrField.text);
+                var saveTxt = editStrField.text;
+                Save(saveTxt);
+                Add(saveTxt);
+                Debug.Log($"save assist button. ({saveTxt})");
+
+                editStrField.text = "";
             });
 
             editDeleteLastButton.onClick.AddListener(() =>
             {
-                DeleteLast();
+                var deleted = DeleteLast();
+                Debug.Log($"delete assist button. ({deleted})");
+
+
+                var buttons = buttonField.GetComponentsInChildren<InputAssistButton>();
+                foreach (var button in buttons)
+                {
+                    if (button.AssistString == deleted)
+                    {
+                        Destroy(button.gameObject);
+                        break;
+                    }
+                }
             });
         }
 
@@ -92,14 +110,17 @@ namespace QRCodeGenerator
             PlayerPrefs.SetInt(KeySaveCount, count);
         }
 
-        public void DeleteLast()
+        public string DeleteLast()
         {
             var count = PlayerPrefs.GetInt(KeySaveCount, 0);
-            if(count <= 0) { return; }
+            if(count == 0) { return null; }
 
+            var value = PlayerPrefs.GetString(GetKey(count));
             PlayerPrefs.DeleteKey(GetKey(count));
             count--;
             PlayerPrefs.SetInt(KeySaveCount, count);
+
+            return value;
         }
     }
 }

@@ -8,6 +8,8 @@ namespace QRCodeGenerator
     [RequireComponent(typeof(Button))]
     public class InputAssistButton : MonoBehaviour
     {
+        public string AssistString { get { return assistString; } }
+
         string assistString;
 
         InputField target;
