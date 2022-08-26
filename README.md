@@ -4,8 +4,11 @@
 - ローカル処理のため、テキスト情報が外部に漏れることがない。
 - 比較的シンプルなUI(広告等が出ない)
 
+## Version
+0.1
+
 ## Info
-- [Unity version] 2021.3.1f1  
+- [Unity version] 2021.3.8f1 (apple silicon)  
 - [supported platforms] Android / Windows  
 - [experimental platforms] iOS / macOS / WebGL  
 
