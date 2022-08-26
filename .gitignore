@@ -74,3 +74,6 @@ crashlytics-build.properties
 # vscode
 .vscode/
 .vsconfig
+
+# for mac
+.DS_Store
