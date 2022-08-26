@@ -10,8 +10,10 @@ namespace QRCodeGenerator
     {
         public string AssistString { get { return assistString; } }
 
+        [SerializeField]
         string assistString;
 
+        [SerializeField]
         InputField target;
 
         Button button;
